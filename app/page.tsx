@@ -3,7 +3,7 @@ import React from 'react';
 import { CardContainer, CardItem } from './components/ui/3d-effect';
 import Link from 'next/link';
 import TokenBlock from './assets/tokenBlock.png';
-import arrow from './assets/arrow.svg';
+import arrow from './assets/arrow.png';
 
 export default function Home() {
   return (
