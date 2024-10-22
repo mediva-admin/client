@@ -3,9 +3,7 @@ import Image from 'next/image';
 import Verified from './../../assets/verified.svg';
 import Doc from './../../assets/doctorImage.png';
 import { useState } from 'react';
-import { CardContainer, CardItem } from '@/app/components/ui/3d-effect';
-import TokenBlock from './../../assets/tokenBlock.png';
-import AppointmentBookingCard from "@/app/components/ui/AppointmentBookingCard"
+import AppointmentBookingCard from '@/app/components/ui/AppointmentBookingCard';
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 interface ButtonType {
@@ -18,7 +16,9 @@ const SectionButton = ({ setCurrent, current, name }: ButtonType) => {
   return (
     <div
       className={`w-[120px] rounded-t-md h-[40px] ${
-        name == current ? 'bg-baseColor text-white' : 'bg-transparent text-black'
+        name == current
+          ? 'bg-baseColor text-white'
+          : 'bg-transparent text-black'
       } flex items-center justify-center font-semibold text-[1rem] select-none cursor-pointer`}
       onClick={() => {
         setCurrent(name);
@@ -54,35 +54,50 @@ export default function Doctor() {
             </div>
           </div>
           <div className='w-full h-[50px] flex flex-row'>
-            <SectionButton current={current} setCurrent={setCurrent} name='Description' />
-            <SectionButton current={current} setCurrent={setCurrent} name='Services' />
-            <SectionButton current={current} setCurrent={setCurrent} name='Experience' />
+            <SectionButton
+              current={current}
+              setCurrent={setCurrent}
+              name='Description'
+            />
+            <SectionButton
+              current={current}
+              setCurrent={setCurrent}
+              name='Services'
+            />
+            <SectionButton
+              current={current}
+              setCurrent={setCurrent}
+              name='Experience'
+            />
           </div>
           <p className='max-w-[600px] text-justify'>
-            Dr. Mukesh Sharma is a highly skilled and experienced physician with a distinguished
-            career in both clinical practice and medical innovation. Having earned his MBBS and MD
-            from leading medical institutions, Dr. Sharma has spent over a decade providing
-            exceptional patient care, specializing in [Specialization: Cardiology, Neurology, etc.].
+            Dr. Mukesh Sharma is a highly skilled and experienced physician with
+            a distinguished career in both clinical practice and medical
+            innovation. Having earned his MBBS and MD from leading medical
+            institutions, Dr. Sharma has spent over a decade providing
+            exceptional patient care, specializing in [Specialization:
+            Cardiology, Neurology, etc.].
             <br />
             <br />
-            During his tenure at Apple Inc., Dr. Sharma played a pivotal role in driving
-            health-related technological advancements, working closely with teams to innovate health
-            monitoring solutions and wellness initiatives. His expertise in integrating medicine
-            with cutting-edge technology has made him a sought-after consultant in the tech-health
+            During his tenure at Apple Inc., Dr. Sharma played a pivotal role in
+            driving health-related technological advancements, working closely
+            with teams to innovate health monitoring solutions and wellness
+            initiatives. His expertise in integrating medicine with cutting-edge
+            technology has made him a sought-after consultant in the tech-health
             domain.
             <br />
             <br />
-            Dr. Sharma is passionate about improving patient outcomes through both personalized
-            medical care and leveraging modern technology to support proactive health management. He
-            continues to contribute to the medical field through [clinical practice, research, or
-            advisory roles].
+            Dr. Sharma is passionate about improving patient outcomes through
+            both personalized medical care and leveraging modern technology to
+            support proactive health management. He continues to contribute to
+            the medical field through [clinical practice, research, or advisory
+            roles].
           </p>
         </div>
 
         {/* Card Component - 40% width */}
         <div className='w-[40%] flex flex-col justify-start'>
           <AppointmentBookingCard />
-          
         </div>
       </div>
     </div>
