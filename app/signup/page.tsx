@@ -3,6 +3,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import authImage from './../assets/authAsset.svg';
 import india from './../assets/india.svg';
+// import axios from 'axios';
+import toast from 'react-hot-toast';
+
 import Link from 'next/link';
 
 export default function Signup() {
@@ -10,38 +13,66 @@ export default function Signup() {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
+  const [isLoading, setIsloading] = useState(false);
 
   const handleGetOtp = async () => {
-    // const response = await fetch('/api/send-otp', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ name, phoneNumber }),
-    // });
+    console.log(phoneNumber);
+    setIsloading(true);
+    setTimeout(() => {
+      setIsloading(false);
+      setIsOtpSent(true);
+      toast.success('OTP sent successfully!');
+    }, 3000);
+    // try {
+    //   const response = await axios.post('http://localhost:8000/auth/send-otp', {
+    //     name,
+    //     phoneNumber,
+    //   });
+    //   console.log(response);
+    //   if (response) setIsloading(false);
 
-    // if (response.ok) {
-    //   setIsOtpSent(true);
-    // } else {
-    //   console.error('Failed to send OTP');
+    //   if (response.status === 200 || response.status === 201) {
+    //     setIsOtpSent(true);
+    //     toast.success('OTP sent successfully!');
+    //   } else {
+    //     console.log(response);
+    //     console.error('Failed to send OTP');
+    //     toast.error('Failed to send OTP');
+    //   }
+    // } catch (error) {
+    //   console.error('Failed to send OTP', error);
+    //   toast.error('Failed to send OTP');
     // }
-    setIsOtpSent(true);
   };
 
   const handleSubmitOtp = async () => {
-    // const response = await fetch('/api/verify-otp', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ phoneNumber, otp }),
-    // });
-    // if (response.ok) {
-    //   console.log('OTP verified successfully');
-    // } else {
-    //   console.error('Failed to verify OTP');
+    setIsloading(true);
+    setTimeout(() => {
+      setIsloading(false);
+      setIsOtpSent(true);
+      toast.success('OTP sent successfully!');
+      window.location.href = '/';
+    }, 3000);
+    // try {
+    //   const response = await axios.post(
+    //     'http://localhost:8000/auth/verify-otp',
+    //     {
+    //       phoneNumber,
+    //       code: otp,
+    //     }
+    //   );
+    //   if (response.status === 200 || response.status === 201) {
+    //     console.log('OTP verified successfully');
+    //     toast.success('OTP verified successfully!');
+    //     window.location.href = '/';
+    //   } else {
+    //     console.error('Failed to verify OTP');
+    //     toast.error('Failed to verify OTP');
+    //   }
+    // } catch (error) {
+    //   console.error('Failed to verify OTP', error);
+    //   toast.error('Failed to verify OTP');
     // }
-    window.location.href = '/';
   };
 
   return (
@@ -92,12 +123,12 @@ export default function Signup() {
               <label className='flex flex-col'>
                 <span className='mb-1'>Enter OTP</span>
                 <div className='flex space-x-5'>
-                  {[...Array(4)].map((_, index) => (
+                  {[...Array(6)].map((_, index) => (
                     <input
                       key={index}
                       type='text'
                       maxLength={1}
-                      className='border-[2px] border-[solid] border-[#929292] rounded-xl h-[60px] w-[55px] text-center focus:outline-none'
+                      className='border-[2px] border-[solid] border-[#929292] rounded-xl h-[50px] w-[45px] text-center focus:outline-none'
                       value={otp[index] || ''}
                       onChange={(e) => {
                         const value = e.target.value;
@@ -106,7 +137,7 @@ export default function Signup() {
                           newOtp[index] = value;
                           setOtp(newOtp.join(''));
 
-                          if (value && index < 3) {
+                          if (value && index < 5) {
                             const nextSibling = e.target.nextElementSibling;
                             if (nextSibling) {
                               (nextSibling as HTMLElement).focus();
@@ -138,7 +169,30 @@ export default function Signup() {
                   className='w-[100px] text-white font-medium flex items-center justify-center h-[35px] rounded-full bg-[#303030]'
                   onClick={handleSubmitOtp}
                 >
-                  Submit
+                  {isLoading ? (
+                    <svg
+                      className='animate-spin h-5 w-5 text-white'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                    >
+                      <circle
+                        className='opacity-25'
+                        cx='12'
+                        cy='12'
+                        r='10'
+                        stroke='currentColor'
+                        strokeWidth='4'
+                      ></circle>
+                      <path
+                        className='opacity-75'
+                        fill='currentColor'
+                        d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                      ></path>
+                    </svg>
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
               </div>
             </div>
@@ -153,10 +207,36 @@ export default function Signup() {
               </p>
 
               <button
-                className='w-[100px] text-white font-medium flex items-center justify-center h-[35px] rounded-full bg-[#303030]'
+                className={`w-[100px] text-white font-medium flex items-center justify-center h-[35px] rounded-full bg-[#303030] ${
+                  isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
                 onClick={handleGetOtp}
+                disabled={isLoading}
               >
-                Get OTP
+                {isLoading ? (
+                  <svg
+                    className='animate-spin h-5 w-5 text-white'
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                  >
+                    <circle
+                      className='opacity-25'
+                      cx='12'
+                      cy='12'
+                      r='10'
+                      stroke='currentColor'
+                      strokeWidth='4'
+                    ></circle>
+                    <path
+                      className='opacity-75'
+                      fill='currentColor'
+                      d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                    ></path>
+                  </svg>
+                ) : (
+                  'Get OTP'
+                )}
               </button>
             </div>
           )}
