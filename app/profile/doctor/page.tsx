@@ -1,9 +1,9 @@
-'use client';
-import Image from 'next/image';
-import Verified from './../../assets/verified.svg';
-import Doc from './../../assets/doctorImage.png';
-import { useState } from 'react';
-import AppointmentBookingCard from '@/app/components/ui/AppointmentBookingCard';
+"use client";
+import Image from "next/image";
+import Verified from "./../../assets/verified.svg";
+import Doc from "./../../assets/doctorImage.png";
+import { useState } from "react";
+import AppointmentBookingCard from "@/app/components/ui/AppointmentBookingCard";
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 interface ButtonType {
@@ -17,8 +17,8 @@ const SectionButton = ({ setCurrent, current, name }: ButtonType) => {
     <div
       className={`w-[120px] rounded-t-md h-[40px] ${
         name == current
-          ? 'bg-baseColor text-white'
-          : 'bg-transparent text-black'
+          ? "bg-baseColor text-white"
+          : "bg-transparent text-black"
       } flex items-center justify-center font-semibold text-[1rem] select-none cursor-pointer`}
       onClick={() => {
         setCurrent(name);
@@ -30,47 +30,49 @@ const SectionButton = ({ setCurrent, current, name }: ButtonType) => {
 };
 
 export default function Doctor() {
-  const [current, setCurrent] = useState('Description');
+  const [current, setCurrent] = useState("Description");
   return (
-    <div className='flex h-screen w-screen bg-background px-[15%] pt-[140px] font-montserrat'>
+    <div className="flex h-screen w-screen bg-background max-sm:px-[0.5rem] sm:px-[15%] max-sm:pt-[70px] sm:pt-[140px] font-montserrat">
       {/* Adjusted container */}
-      <div className='flex flex-row w-full gap-6'>
+      <div className="max-sm:flex-col flex sm:flex-row w-full gap-6">
         {/* Doctor's Information - 60% width */}
-        <div className='w-[60%] flex flex-col text-black gap-[20px]'>
-          <div className='flex flex-row'>
-            <Image src={Doc} alt='Doctor' />
-            <div className='ml-4'>
-              <p className='font-semibold text-[2.5rem]'>Dr. Mukesh Sharma</p>
-              <p className='font-medium'>
+        <div className="max-sm:w-full sm:w-[60%] flex flex-col text-black gap-[20px]">
+          <div className="flex flex-row">
+            <Image src={Doc} alt="Doctor" />
+            <div className="ml-4">
+              <p className="font-semibold max-sm:text-[1.2rem] sm:text-[2.5rem]">
+                Dr. Mukesh Sharma
+              </p>
+              <p className="font-medium">
                 Adult Psychiatric & Mental Health Nurse Practitioner
               </p>
-              <p className='font-medium'>
+              <p className="font-medium">
                 10 Years Experience Overall  (4 years as specialist)
               </p>
-              <div className='flex flex-row'>
-                <Image src={Verified} alt='verified' />
+              <div className="flex flex-row">
+                <Image src={Verified} alt="verified" />
                 <p>Verified</p>
               </div>
             </div>
           </div>
-          <div className='w-full h-[50px] flex flex-row'>
+          <div className="w-full h-[50px] flex flex-row">
             <SectionButton
               current={current}
               setCurrent={setCurrent}
-              name='Description'
+              name="Description"
             />
             <SectionButton
               current={current}
               setCurrent={setCurrent}
-              name='Services'
+              name="Services"
             />
             <SectionButton
               current={current}
               setCurrent={setCurrent}
-              name='Experience'
+              name="Experience"
             />
           </div>
-          <p className='max-w-[600px] text-justify'>
+          <p className="max-w-[600px] text-justify">
             Dr. Mukesh Sharma is a highly skilled and experienced physician with
             a distinguished career in both clinical practice and medical
             innovation. Having earned his MBBS and MD from leading medical
@@ -96,7 +98,7 @@ export default function Doctor() {
         </div>
 
         {/* Card Component - 40% width */}
-        <div className='w-[40%] flex flex-col justify-start'>
+        <div className="max-sm:w-full sm:w-[40%] flex flex-col justify-start">
           <AppointmentBookingCard />
         </div>
       </div>
