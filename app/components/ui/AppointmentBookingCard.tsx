@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { X, MapPin, ChevronDown } from "lucide-react";
 import Button from "./Button";
 import { DatesProvider, DateInput, TimeInput, DateValue } from "@mantine/dates";
+import { useRouter } from "next/navigation";
 
 const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
@@ -50,7 +51,7 @@ export default function AppointmentBookingCard() {
     console.log(selectedDate, selectedTime);
   }, [selectedDate, selectedTime]);
 
-  // const router = useRouter();
+  const router = useRouter();
   return (
     <Card className="w-full max-w-md " style={{ borderRadius: "20px" }}>
       <CardHeader className="flex items-center justify-between border-b border-gray-200">
@@ -110,73 +111,110 @@ export default function AppointmentBookingCard() {
               Token book
             </Button>
           </div>
+          <p className="text-[0.8rem]">
+            {selectedAppointmentType === "SLOT"
+              ? "Earliest available slot is at 10:25 AM."
+              : "Please arrive at the hospital 10 minutes before your token time."}
+          </p>
 
           <div className="mb-4 flex items-center">
             <div className="flex flex-col mr-4">
-              <label className="block font-medium text-sm">Date</label>
-              <div
-                className="flex items-center mt-1 max-w-[150px] border border-black-600 rounded-md"
-                style={{ borderRadius: "8px" }}
-              >
-                <div
-                  className="flex items-center justify-center p-2 rounded-l-md "
-                  style={{ backgroundColor: "#51b4a1" }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-5 h-5 text-white"
+              <label className="block font-medium text-sm">
+                {selectedAppointmentType === "SLOT"
+                  ? "Date"
+                  : "Position in Queue"}
+              </label>
+              {selectedAppointmentType === "SLOT" && (
+                <div className="flex items-center mt-1 max-w-[150px] border border-black-600 rounded-md">
+                  <div
+                    className="flex items-center justify-center p-2 rounded-l-md "
+                    style={{ backgroundColor: "#51b4a1" }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-5 h-5 text-white"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+                      />
+                    </svg>
+                  </div>
+                  <DatesProvider
+                    settings={{
+                      firstDayOfWeek: 0,
+                      weekendDays: [0],
+                      timezone: "Asia/Kolkata",
+                    }}
+                  >
+                    <DateInput
+                      clearable
+                      defaultValue={new Date()}
+                      minDate={dayjs(new Date()).add(1, "day").toDate()}
+                      maxDate={dayjs(new Date())
+                        .add(1, "day")
+                        .add(1, "week")
+                        .toDate()}
+                      onChange={(date: DateValue) =>
+                        setSelectedDate(
+                          new Date(date?.toDateString() as string)
+                        )
+                      }
                     />
-                  </svg>
+                  </DatesProvider>
                 </div>
-                <DatesProvider
-                  settings={{
-                    firstDayOfWeek: 0,
-                    weekendDays: [0],
-                    timezone: "Asia/Kolkata",
-                  }}
+              )}
+              {selectedAppointmentType === "TOKEN" && (
+                <div
+                  className="flex items-center mt-1 max-w-[150px] border border-black-600 rounded-md text-[0.8rem]"
+                  style={{ borderRadius: "8px" }}
                 >
-                  <DateInput
-                    clearable
-                    defaultValue={new Date()}
-                    minDate={dayjs(new Date()).add(1, "day").toDate()}
-                    maxDate={dayjs(new Date())
-                      .add(1, "day")
-                      .add(1, "week")
-                      .toDate()}
-                    onChange={(date: DateValue) =>
-                      setSelectedDate(new Date(date?.toDateString() as string))
-                    }
-                  />
-                </DatesProvider>
-              </div>
+                  There are 13 people before you
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col ml-8">
-              <label className="block font-medium text-sm">Time Slot</label>
-              <div
-                className="text-sm mt-1 p-2 rounded-md "
-                style={{ borderRadius: "8px" }}
-              >
-                <TimeInput
-                  withAsterisk
-                  onChange={(e) => setSelectedTime(e.target.value)}
-                />
-              </div>
+              <label className="block font-medium text-sm">
+                {selectedAppointmentType === "SLOT"
+                  ? "Time Slot"
+                  : "Estimated Wait Time"}
+              </label>
+              {selectedAppointmentType === "SLOT" && (
+                <div
+                  className="text-sm mt-1 p-2 rounded-md"
+                  style={{ borderRadius: "8px" }}
+                >
+                  <TimeInput
+                    withAsterisk
+                    onChange={(e) => setSelectedTime(e.target.value)}
+                  />
+                </div>
+              )}
+              {selectedAppointmentType === "TOKEN" && (
+                <div
+                  className="text-sm mt-1 p-2 border border-black-600 rounded-md"
+                  style={{ borderRadius: "8px" }}
+                >
+                  37 minutes
+                </div>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-3 gap-2">
             <Button
               variant="outline"
               className="w-full bg-emerald-500 text-white hover:bg-emerald-600"
+              onClick={() =>
+                selectedAppointmentType === "SLOT"
+                  ? router.push("/slotBooked")
+                  : router.push("/tokenBooked")
+              }
             >
               Book
             </Button>
