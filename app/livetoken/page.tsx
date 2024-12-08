@@ -59,7 +59,7 @@ export default function Livetoken() {
     }
   };
   return (
-    <div className='text-black flex h-screen w-screen bg-background px-[4%] md:px-[10%]  font-montserrat flex-col items-center  relative'>
+    <div className='text-black flex h-screen w-screen bg-background px-[4%] md:px-[10%]  font-montserrat flex-col items-center  relative overflow-y-hidden'>
       <Link href={location} className=' w-full absolute bottom-0'>
         {' '}
         <div className=' w-full h-[50px] rounded-tr-2xl rounded-tl-2xl bg-black flex flex-row items-center justify-around p-[5px] px-[10px]'>
