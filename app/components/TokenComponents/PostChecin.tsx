@@ -9,7 +9,7 @@ export default function PostCheckin() {
         </h1>
         <p className='font-semibold'>Alloted Time</p>
         <h1 className='text-[2.4rem] sm:text-[3rem] font-semibold text-[#2FA58E] '>
-          6 : 25 pm
+          6 : 30 pm
         </h1>
       </div>
       <div className='h-[10%] w-full bg-black flex flex-row items-center justify-center text-white text-[0.9rem]'>
