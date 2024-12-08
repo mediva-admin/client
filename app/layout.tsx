@@ -2,11 +2,11 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import './globals.css';
 import Navbar from './navbar/page';
-import { MantineProvider } from '@mantine/core';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
+import { MantineProvider } from '@mantine/core';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -38,7 +38,8 @@ export default function RootLayout({
           <Toaster />
         </div>
         <MantineProvider>
-          <Navbar />
+          {typeof window !== 'undefined' &&
+            window.location.pathname !== '/livetoken' && <Navbar />}
           {children}
         </MantineProvider>
       </body>
