@@ -37,9 +37,11 @@ export default function RootLayout({
         <div>
           <Toaster />
         </div>
+
         <MantineProvider>
           {typeof window !== 'undefined' &&
-            window.location.pathname !== '/livetoken' && <Navbar />}
+            window.location.pathname !== '/livetoken' &&
+            window.location.pathname && <Navbar />}
           {children}
         </MantineProvider>
       </body>
