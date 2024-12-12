@@ -37,7 +37,6 @@ export default function RootLayout({
         <div>
           <Toaster />
         </div>
-
         <MantineProvider>
           <Navbar />
           {children}
