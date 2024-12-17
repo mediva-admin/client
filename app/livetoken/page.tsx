@@ -1,19 +1,16 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "./../assets/logo-black.png";
 import optionsIcon from "./../assets/options.svg";
 import arrow from "./../assets/arrow_status.svg";
 import mapsIcon from "./../assets/maps_icon.png";
-import successfull from "./../assets/successfull.svg";
-import { Combobox, useCombobox, Switch } from "@mantine/core";
+import { Combobox, useCombobox } from "@mantine/core";
 import Link from "next/link";
 import PostCheckin from "../components/TokenComponents/PostChecin";
-import Precheckin from "../components/TokenComponents/PreCheckin";
 import { API_URL } from "../config/config";
 
 export default function Livetoken() {
-  const [checkin, setCheckin] = useState(false);
   const [patientId, setPatientId] = useState<string | null>(null);
   const [position, setPosition] = useState(0);
   const [tokenNumber, setTokenNumber] = useState(0);
@@ -24,7 +21,7 @@ export default function Livetoken() {
     if (searchParams.get("patientId")) {
       setPatientId(searchParams.get("patientId"));
     }
-  }, [checkin]);
+  }, []);
 
   useEffect(() => {
     if (!patientId) return;
